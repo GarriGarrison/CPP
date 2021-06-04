@@ -2,8 +2,8 @@
 * @author: Garrison
 *
 * @project: Tic Tac Toe (игра Крестики-Нолики)
-* @version: 1.0
-* @date: 02.06.2021
+* @version: 1.1
+* @date: 04.06.2021
 *
 * std: C++ 11
 * ide: CodeBlocks 20.03
@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <clocale>
+//#include <windns.h>
 
 using namespace std;
 
@@ -43,6 +45,9 @@ void AnnounceWinner(char winner, char computer, char human);  /* объявля�
 /** -= MAIN =- */
 int main()
 {
+    setlocale(LC_ALL, "rus");
+    //SetConsoleOutputCP(1251); // установка кодовой страницы win-cp 1251 в поток вывода
+
     int move;
     const int NUM_SQUARES = 9;
     vector<char> board(NUM_SQUARES, EMPTY);
@@ -75,16 +80,16 @@ int main()
 /** Functions */
 void Instructions()
 {
-    cout << "Welcome to the ultimate man-machine showdown: Tic-Tac-Toe.\n";
-    cout << "--where human brain is pit against silicon processor\n\n";
-    cout << "Make your move known by entering a number, 0 - 8. The number\n";
-    cout << "corresponds to the desired board position, as illustrated:\n\n";
-    cout << " 0 | 1 | 2 \n";
+    cout << "Добро пожаловать в финальную битву человек-машина: крестики-нолики.\n";
+    cout << "--где человеческий мозг противостоит кремниевому процессору\n\n";
+    cout << "Сделайте свой ход, введя число от 1 до 9. Число\n";
+    cout << "соответствует желаемому положению доски, как показано на рисунке:\n\n";
+    cout << " 1 | 2 | 3 \n";
     cout << " --------- \n";
-    cout << " 3 | 4 | 5 \n";
+    cout << " 4 | 5 | 6 \n";
     cout << " --------- \n";
-    cout << " 6 | 7 | 8 \n\n";
-    cout << "Prepare yourself, human. The battle is about to begin. \n\n";
+    cout << " 7 | 8 | 9 \n\n";
+    cout << "Приготовься, человек. Битва вот-вот начнется.\n\n";
 }
 
 
@@ -106,25 +111,28 @@ int AskNumber(string question, int high, int low)
 {
     int number;
 
+    ++high;
+    ++low;
+
     do {
         cout << question << " (" << low << " - " << high << "): ";
         cin >> number;
     }
     while (number > high || number < low);
 
-    return number;
+    return --number;
 }
 
 
 char HumanPiece()
 {
-    char go_first = AskYesNo("Do you require the first move?");
+    char go_first = AskYesNo("Хочешь ходить первым?");
     if (go_first == 'y') {
-        cout << "\nThen take the first move. You will need it.\n";
+        cout << "\nТогда сделайте первый шаг.\n";
         return X;
     }
     else {
-        cout << "\nYour bravery will be your undoing...I will go first.\n";
+        cout << "\nТвоя храбрость погубит тебя...Я пойду первым.\n";
         return O;
     }
 }
@@ -196,13 +204,13 @@ inline bool IsLegal(int move, const vector<char>& board)
 
 int HumanMove(const vector<char>& board, char human)
 {
-    int move = AskNumber("Where will you move?", (board.size()-1));
+    int move = AskNumber("Какую ячейку займёшь?", (board.size()-1));
 
     while (!IsLegal(move, board)) {
-        cout << "\nThat square ia already occupied, foolish human.\n";
-        move = AskNumber("Where will you move?", (board.size()-1));
+        cout << "\nЭта ячейка уже занята, глупый человек.\n";
+        move = AskNumber("Какую ячейку займёшь?", (board.size()-1));
     }
-    cout << "Fine...\n";
+    cout << "Хорошо...\n";
 
     return move;
 }
@@ -264,18 +272,18 @@ int ComputerMove(vector<char> board, char computer)
 void AnnounceWinner(char winner, char computer, char human)
 {
     if (winner == computer) {
-        cout << winner << " 's won!\n";
-        cout << "As I predicted, human, I am triumphant once more -- proof\n";
-        cout << "that computers are superior to humans in all regards.\n";
+        cout << winner << " - выйграл!\n";
+        cout << "Как я и предсказывал, человек, я снова торжествую-доказательство\n";
+        cout << "что компьютеры превосходят людей во всех отношениях.\n";
     }
     else if (winner == human) {
         cout << winner << " 's won!\n";
-        cout << "No, no! It cannot be! Somehow you tricked me, human.\n";
-        cout << "But never again! I, the computer, so swear it!\n";
+        cout << "Нет, нет! Этого не может быть! Каким-то образом ты обманул меня, человек.\n";
+        cout << "Но больше этого никогда не произойдёт! Я, компьютер, клянусь в этом!\n";
     }
     else {
-        cout << "It's a tie.\n";
-        cout << "You were most lucky, human, and somehow managed to tie me.\n";
-        cout << "Celebrate...for this is the best you will ever achieve.\n";
+        cout << "Это ничья.\n";
+        cout << "Тебе очень повезло, человек, и ты каким-то образом сумел связать меня.\n";
+        cout << "Празднуй...ибо это лучшее, чего ты когда - либо смог достигнуть.\n";
     }
 }
