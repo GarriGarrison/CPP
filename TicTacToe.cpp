@@ -264,7 +264,7 @@ int ComputerMove(vector<char> board, char computer)
         }
     }
 
-    cout << "I shall take square number " << move << endl;
+    cout << "Я займу ячейку - " << move << endl;
     return move;
 }
 
@@ -273,7 +273,7 @@ void AnnounceWinner(char winner, char computer, char human)
 {
     if (winner == computer) {
         cout << winner << " - выйграл!\n";
-        cout << "Как я и предсказывал, человек, я снова торжествую-доказательство\n";
+        cout << "Как я и предсказывал, человек, я снова торжествую - доказательство\n";
         cout << "что компьютеры превосходят людей во всех отношениях.\n";
     }
     else if (winner == human) {
